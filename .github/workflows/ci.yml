@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: 安装 .NET 8
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+
+      - name: 资产自检（校验仓库内 data/ 是否完整）
+        run: dotnet run --project tools/WardogsArtillery.Tools -c Release -- assets check --allow-missing
+
+      - name: 单元测试
+        run: dotnet test -c Release --nologo -v q
+
+      - name: 前端静态检查
+        run: |
+          node tools/webcheck.mjs
+          node tools/webrender-check.mjs
+
+      - name: JS 计算核心与 C
+        shell: pwsh
+        run: |
+
+          $fresh = Join-Path $env:RUNNER_TEMP 'golden_core.json'
+          dotnet run --project tools/WardogsArtillery.Tools -c Release -- core-golden --out $fresh
+          if ($LASTEXITCODE -ne 0) { throw "金标准生成失败" }
+          node tools/corecheck.mjs --golden $fresh
+          if ($LASTEXITCODE -ne 0) { throw "JS 核心与 C# 不一致" }
+
+      - name: 静态站数据流端到端
+        run: node tools/e2echeck.mjs
+
+      - name: 单文件发布冒烟（不产出发行包）
+        run: dotnet publish src/WardogsArtillery.Server -c Release -r win-x64 -o dist/stage

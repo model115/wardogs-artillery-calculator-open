@@ -1,0 +1,15 @@
+# 统一行尾，避免 Windows 克隆时反复出现 LF→CRLF 警告、跨平台 diff 噪音。
+# 文本文件一律以 LF 入库；只有 Windows 批处理必须是 CRLF。
+* text=auto eol=lf
+
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# 二进制：不要做行尾转换，也不要在 diff 里显示
+*.png  binary
+*.webp binary
+*.hgt  binary
+*.wrg  binary
+*.ico  binary
+*.zip  binary
+*.exe  binary

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>WARDOGS 火炮解算器</title>
+
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot" id="conn-dot"></span>
+      <b id="brand-title">WARDOGS 火炮解算器</b>
+      <span class="muted" id="conn-text">连接中…</span>
+    </div>
+    <div class="topbar-right">
+      <button id="place-gun" class="ghost soft" title="点地图放置车体（炮位）">放车体</button>
+      <button id="place-target" class="ghost soft" title="点地图放置目标（最多 3 个）">放目标</button>
+      <select id="map-select" title="地图"></select>
+      <select id="weapon-select" title="武器"></select>
+      <button id="btn-fit" class="ghost" title="重置视图">重置视图</button>
+      <button id="btn-lang" class="ghost" title="切换界面语言 / Switch UI language">EN</button>
+      <button id="btn-help" class="ghost" title="教程与功能说明">?</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="map-wrap">
+      <canvas id="map"></canvas>
+      <div class="map-hud">
+        <div id="cursor-pos" class="chip mono">x —  y —</div>
+        <div class="chip muted" id="map-zoom">—</div>
+        <div class="chip ruler mono" id="ruler-txt" hidden>量距：点两个点</div>
+        <div class="chip" id="click-hint">点地图：第 1 下放车体，第 2 下放目标</div>
+      </div>
+      <div class="map-tools">
+        <button id="btn-ruler" class="tool soft" title="量距：点两个点测距离">量距</button>
+        <button id="btn-zone" class="tool" title="点地图放一个占领圈">占领圈</button>
+        <button id="btn-impact" class="tool soft" title="点地图记录炮弹落点，反推第二发">记录落点</button>
+        <button id="btn-clear-points" class="tool soft" title="清除炮位与目标">清除点位</button>
+      </div>
+
+      <div class="feed" id="feed">
+        <div class="feed-head">
+          <span data-i18n="feed.title">实时日志</span>
+          <span class="muted small" id="feed-clear" data-i18n="feed.clear">清空</span>
+        </div>
+        <div id="feed-list" class="feed-list"></div>
+      </div>
+
+      <div class="credit">
+        by <a href="https://github.com/model115" target="_blank" rel="noopener">model115</a>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+
+      <div class="card">
+        <h3 data-i18n="card.points">点位</h3>
+        <div class="kv"><span data-i18n="point.vehicle">车体</span><b id="st-gun" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="point.target">目标</span><b id="st-target" class="mono">—</b></div>
+        <div class="coord-row">
+          <span class="coord-label" data-i18n="point.vehicle">车体</span>
+          <input id="gun-x" class="mono coord" type="number" step="0.01" placeholder="X">
+          <input id="gun-y" class="mono coord" type="number" step="0.01" placeholder="Y">
+          <button id="gun-copy" class="tiny ghost" title="复制坐标" data-i18n="point.copy">复制</button>
+          <button id="gun-lock" class="tiny ghost" title="锁定后点地图不会覆盖" data-i18n="point.lock">锁</button>
+        </div>
+        <div class="coord-row">
+          <span class="coord-label" data-i18n="point.target">目标</span>
+          <input id="target-x" class="mono coord" type="number" step="0.01" placeholder="X">
+          <input id="target-y" class="mono coord" type="number" step="0.01" placeholder="Y">
+          <button id="target-copy" class="tiny ghost" title="复制坐标" data-i18n="point.copy">复制</button>
+          <button id="target-lock" class="tiny ghost" title="锁定后点地图不会覆盖" data-i18n="point.lock">锁</button>
+        </div>
+        <div class="btn-row">
+          <button id="btn-goto" class="ghost" data-i18n="point.goto">定位到坐标</button>
+          <button id="btn-save-gun" class="ghost" title="把当前车体存进目标列表" data-i18n="point.saveGun">存车体</button>
+          <button id="btn-swap" class="ghost" title="把目标当作车体，反向校核射程" data-i18n="point.swap">交换点位</button>
+        </div>
+        <div class="hint" data-i18n="point.hint">手输坐标 → 回车或「定位到坐标」；锁上后在地图上误点也不会覆盖。</div>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="card.solution">射击诸元</h3>
+        <label class="row"><input type="checkbox" id="sol-tilt"> <span data-i18n="sol.tilt">地形倾斜修正（实验：用 3D 高程推算车体姿态）</span></label>
+        <div class="kv"><span data-i18n="sol.range">水平距离</span><b id="sol-range" class="mono">—</b></div>
+        <div class="kv big"><span data-i18n="sol.bearing">游戏内方位角</span><b id="sol-bearing" class="mono">—</b></div>
+        <div class="kv big"><span data-i18n="sol.elev">游戏内刻度</span><b id="sol-elev" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.dxdy">ΔX / ΔY</span><b id="sol-dxdy" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.dz">高差 ΔZ</span><b id="sol-dz" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.flat">射表（平地）</span><b id="sol-flat" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.corr">高差修正</span><b id="sol-corr" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.tiltCorr">倾斜修正（实验）</span><b id="sol-tilt-corr" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.pitch">车体俯仰（地形）</span><b id="sol-pitch" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.roll">车体侧倾（地形）</span><b id="sol-roll" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.flight">飞行时间</span><b id="sol-flight" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="sol.inrange">射程判定</span><b id="sol-inrange">—</b></div>
+        <div class="hint" id="sol-hint"></div>
+        <div class="hint warn" id="tilt-warn" hidden></div>
+      </div>
+
+      <div class="card">
+        <h3><span data-i18n="card.impact">弹着点反推</span>
+          <button id="btn-impact-clear" class="tiny ghost" title="清除落点与修正" data-i18n="imp.clear">清除</button>
+        </h3>
+        <div class="coord-row">
+          <span class="coord-label" data-i18n="point.impact">落点</span>
+          <input id="impact-x" class="mono coord" type="number" step="0.01" placeholder="X">
+          <input id="impact-y" class="mono coord" type="number" step="0.01" placeholder="Y">
+          <button id="impact-set" class="tiny ghost" title="用填写的坐标记录落点" data-i18n="point.record">记录</button>
+        </div>
+        <div class="kv"><span data-i18n="imp.range">距离偏差</span><b id="imp-range" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="imp.bearing">方位偏差</span><b id="imp-bearing" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="imp.mil">刻度修正</span><b id="imp-mil" class="mono">—</b></div>
+        <div class="kv big"><span data-i18n="imp.nextMil">下一发刻度</span><b id="imp-next-mil" class="mono">—</b></div>
+        <div class="kv big"><span data-i18n="imp.nextAz">下一发方位</span><b id="imp-next-az" class="mono">—</b></div>
+        <div class="hint" id="imp-hint" data-i18n="imp.hint">点「记录落点」再点地图上炮弹落点，或直接填坐标按「记录」，自动反推第二发要改多少。</div>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="card.layers">图层</h3>
+        <label class="row"><input type="checkbox" id="layer-terrain"> <span data-i18n="layer.terrain">高度热力图（越高越红）</span></label>
+        <label class="row"><input type="checkbox" id="layer-towers"> <span data-i18n="layer.towers">1~5 塔被射范围（预算图）</span></label>
+        <div class="legend" id="legend" hidden>
+          <div class="legend-bar"></div>
+          <div class="legend-labels"><span id="legend-min">—</span><span id="legend-max">—</span></div>
+        </div>
+        <div class="hint" data-i18n="layer.hint">热力图来自游戏原生 3D 高程场（2 m 顶点间距），半透明叠在地图上。</div>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="card.ring">射程圈（3D 高程计算）</h3>
+        <div class="btn-row">
+          <button id="ring-show-gun" class="ghost on" data-i18n="ring.gun">车体射程</button>
+          <button id="ring-show-target" class="ghost" data-i18n="ring.target">目标射程</button>
+        </div>
+        <label class="row"><input type="checkbox" id="ring-lock"> <span data-i18n="ring.lock">锁定（拖动时不再自动切换）</span></label>
+        <label class="row"><input type="checkbox" id="ring-terrain" checked> <span data-i18n="ring.terrain">用 3D 高程逐方位计算（关掉=射表平地）</span></label>
+        <label class="row"><input type="checkbox" id="ring-masking"> <span data-i18n="ring.masking">弹道遮挡检查（近似，可能偏保守）</span></label>
+        <div class="kv"><span data-i18n="ring.now">当前显示</span><b id="ring-now-txt">车体</b></div>
+        <div class="kv"><span data-i18n="ring.gunTxt">车体可达射程</span><b id="ring-gun-txt" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="ring.azTxt">目标方位射程</span><b id="ring-az-txt" class="mono">—</b></div>
+        <div class="kv"><span data-i18n="ring.targetTxt">目标可达射程</span><b id="ring-target-txt" class="mono">—</b></div>
+        <div class="hint" id="ring-hint" data-i18n="ring.hint">高抛/低抛已合并为统一射程；拖动标点时实时重算。</div>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="card.zones">占领圈</h3>
+        <div class="coord-row">
+          <span class="coord-label" data-i18n="zone.radius">半径</span>
+          <input id="zone-radius" class="mono coord" type="number" step="10" min="10" max="5000" value="150">
+          <span class="muted small" data-i18n="zone.m">米</span>
+          <button id="btn-clear-zones" class="tiny ghost" data-i18n="zone.clear">清空</button>
+        </div>
+        <div class="hint" data-i18n="zone.hint">点左下角「占领圈」按钮进入放置模式，再点地图即可放一个圈（可放多个）。</div>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="card.view">视图</h3>
+        <div class="btn-row">
+          <button id="btn-zoom-out" class="ghost" title="缩小">−</button>
+          <button id="btn-zoom-in" class="ghost" title="放大">＋</button>
+          <button id="btn-reset" class="ghost" title="重置视图" data-i18n="view.reset">重置</button>
+        </div>
+        <div class="hint" data-i18n="view.hint">按住鼠标右键拖动地图；滚轮缩放。局域网内任何设备打开本页都能用同一份状态。</div>
+      </div>
+
+      <div class="card">
+        <h3><span data-i18n="card.targets">目标列表</span>
+          <span class="muted small" id="target-count">0</span>
+          <button id="btn-export" class="tiny ghost" title="导出为 JSON 文件" data-i18n="targets.export">导出</button>
+          <button id="btn-import" class="tiny ghost" title="从 JSON 导入" data-i18n="targets.import">导入</button>
+          <button id="btn-clear-targets" class="tiny ghost" data-i18n="targets.clear">清空</button>
+        </h3>
+        <input id="import-file" type="file" accept=".json,application/json" hidden>
+        <div id="target-list" class="list"></div>
+      </div>
+
+    </aside>
+  </main>
+</div>
+
+<div class="modal" id="tutorial" hidden>
+  <div class="modal-box">
+    <div class="modal-head">
+      <b id="tutorial-title">快速上手</b>
+      <span class="muted small" id="tutorial-step">1 / 5</span>
+    </div>
+    <div class="modal-body" id="tutorial-body"></div>
+    <div class="modal-foot">
+      <label class="row"><input type="checkbox" id="tutorial-skip"> <span data-i18n="tut.skip">不再自动显示</span></label>
+      <span class="spacer"></span>
+      <button id="tutorial-lang" class="ghost" title="切换界面语言 / Switch UI language">English</button>
+      <button id="tutorial-prev" class="ghost" data-i18n="tut.prev">上一步</button>
+      <button id="tutorial-next" class="primary" data-i18n="tut.next">下一步</button>
+      <button id="tutorial-close" class="ghost" data-i18n="tut.close">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script src="core/ballistics.js"></script>
+<script src="core/terrain.js"></script>
+<script src="core/reach.js"></script>
+<script src="store.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

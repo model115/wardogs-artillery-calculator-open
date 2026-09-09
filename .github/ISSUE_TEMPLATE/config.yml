@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全问题 / Security
+    url: https://github.com/model115/wardogs-artillery-calculator/security/advisories/new
+    about: 请用私密漏洞报告，不要开公开 issue。
+  - name: 上游数据来源 / Upstream data
+    url: https://github.com/apollyon-sys/wardogs-calculator
+    about: 射表、地图瓦片等原始数据的来源项目。

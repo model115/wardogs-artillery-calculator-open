@@ -1,0 +1,20 @@
+# 构建产物
+bin/
+obj/
+dist/
+publish/
+
+# 运行期产物
+logs/
+*.log
+
+# 编辑器 / 系统
+.vs/
+.idea/
+*.user
+*.suo
+Thumbs.db
+desktop.ini
+
+# 数据源（不随仓库分发，构建期用 --source 指定）
+research/

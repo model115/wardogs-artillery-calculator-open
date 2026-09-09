@@ -1,0 +1,417 @@
+[
+  {
+    "id": "bakurani",
+    "name": "Bakurani",
+    "bounds": {
+      "minX": 23.35,
+      "maxX": 133.6,
+      "minY": 19.34,
+      "maxY": 129.65
+    },
+    "tileBounds": {
+      "minX": -0.03,
+      "maxX": 163.81,
+      "minY": -0.01,
+      "maxY": 163.83
+    },
+    "markers": [
+      {
+        "x": 8364,
+        "y": 7285,
+        "label": "Tower 4",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 7719,
+        "y": 7344,
+        "label": "Tower 3",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 7719,
+        "y": 7000,
+        "label": "Tower 2",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 8052,
+        "y": 6985,
+        "label": "Tower 1",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 8222,
+        "y": 6841,
+        "label": "Tower 5",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 11875,
+        "y": 7093,
+        "label": "Valkyra",
+        "icon": "valkyra",
+        "minZoom": 10
+      },
+      {
+        "x": 11830,
+        "y": 7073,
+        "label": "Weapons Vendor",
+        "icon": "weapons_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 11814,
+        "y": 7045,
+        "label": "Garage Vendor",
+        "icon": "garage_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 11837,
+        "y": 7049,
+        "label": "Spawn Board",
+        "icon": "spawn_board",
+        "minZoom": 10
+      },
+      {
+        "x": 4009,
+        "y": 7752,
+        "label": "Manticore",
+        "icon": "manticore",
+        "minZoom": 10
+      },
+      {
+        "x": 3977,
+        "y": 7765,
+        "label": "Weapons Vendor",
+        "icon": "weapons_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 4010,
+        "y": 7731,
+        "label": "Garage Vendor",
+        "icon": "garage_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 3968,
+        "y": 7748,
+        "label": "Spawn Board",
+        "icon": "spawn_board",
+        "minZoom": 10
+      },
+      {
+        "x": 8746,
+        "y": 3250,
+        "label": "Lonestar",
+        "icon": "lonestar",
+        "minZoom": 10
+      },
+      {
+        "x": 8720,
+        "y": 3268,
+        "label": "Weapons Vendor",
+        "icon": "weapons_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 8684,
+        "y": 3264,
+        "label": "Garage Vendor",
+        "icon": "garage_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 8706,
+        "y": 3272,
+        "label": "Spawn Board",
+        "icon": "spawn_board",
+        "minZoom": 10
+      }
+    ],
+    "polygons": [
+      {
+        "label": "VALKYRA Spawn",
+        "color": "#d86666",
+        "fillOpacity": 0.12,
+        "dashed": true,
+        "points": [
+          {
+            "x": 11750,
+            "y": 7376
+          },
+          {
+            "x": 12122,
+            "y": 7071
+          },
+          {
+            "x": 11818,
+            "y": 6699
+          },
+          {
+            "x": 11445,
+            "y": 7004
+          }
+        ]
+      },
+      {
+        "label": "MANTICORE Spawn",
+        "color": "#82c596",
+        "fillOpacity": 0.12,
+        "dashed": true,
+        "points": [
+          {
+            "x": 3868,
+            "y": 7988
+          },
+          {
+            "x": 4339,
+            "y": 7885
+          },
+          {
+            "x": 4235,
+            "y": 7415
+          },
+          {
+            "x": 3765,
+            "y": 7518
+          }
+        ]
+      },
+      {
+        "label": "LONESTAR Spawn",
+        "color": "#5fa8d3",
+        "fillOpacity": 0.12,
+        "dashed": true,
+        "points": [
+          {
+            "x": 8308,
+            "y": 3527
+          },
+          {
+            "x": 8772,
+            "y": 3651
+          },
+          {
+            "x": 8897,
+            "y": 3186
+          },
+          {
+            "x": 8432,
+            "y": 3062
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ozeti",
+    "name": "Ozeti",
+    "bounds": {
+      "minX": 57.58,
+      "maxX": 143.07,
+      "minY": 21.81,
+      "maxY": 99.56
+    },
+    "tileBounds": {
+      "minX": -0.03,
+      "maxX": 163.81,
+      "minY": -0.01,
+      "maxY": 163.83
+    },
+    "markers": [
+      {
+        "x": 10062,
+        "y": 6764,
+        "label": "Tower 4",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 10449,
+        "y": 6371,
+        "label": "Tower 3",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 10037,
+        "y": 5923,
+        "label": "Tower 2",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 9580,
+        "y": 6282,
+        "label": "Tower 1",
+        "icon": "tower",
+        "minZoom": 0.4
+      },
+      {
+        "x": 11875,
+        "y": 7093,
+        "label": "Valkyra",
+        "icon": "valkyra",
+        "minZoom": 10
+      },
+      {
+        "x": 13803,
+        "y": 6733,
+        "label": "Weapons Vendor",
+        "icon": "weapons_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 13790,
+        "y": 6707,
+        "label": "Garage Vendor",
+        "icon": "garage_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 13788,
+        "y": 6726,
+        "label": "Spawn Board",
+        "icon": "spawn_board",
+        "minZoom": 10
+      },
+      {
+        "x": 6828,
+        "y": 8803,
+        "label": "Manticore",
+        "icon": "manticore",
+        "minZoom": 10
+      },
+      {
+        "x": 6854,
+        "y": 8816,
+        "label": "Weapons Vendor",
+        "icon": "weapons_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 6866,
+        "y": 8792,
+        "label": "Garage Vendor",
+        "icon": "garage_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 6842,
+        "y": 8786,
+        "label": "Spawn Board",
+        "icon": "spawn_board",
+        "minZoom": 10
+      },
+      {
+        "x": 8373,
+        "y": 3069,
+        "label": "Lonestar",
+        "icon": "lonestar",
+        "minZoom": 10
+      },
+      {
+        "x": 8385,
+        "y": 3088,
+        "label": "Weapons Vendor",
+        "icon": "weapons_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 8373,
+        "y": 3117,
+        "label": "Garage Vendor",
+        "icon": "garage_vendor",
+        "minZoom": 10
+      },
+      {
+        "x": 8368,
+        "y": 3104,
+        "label": "Spawn Board",
+        "icon": "spawn_board",
+        "minZoom": 10
+      }
+    ],
+    "polygons": [
+      {
+        "label": "VALKYRA Spawn",
+        "color": "#d86666",
+        "fillOpacity": 0.12,
+        "dashed": true,
+        "points": [
+          {
+            "x": 13398,
+            "y": 6851
+          },
+          {
+            "x": 13858,
+            "y": 6992
+          },
+          {
+            "x": 13999,
+            "y": 6532
+          },
+          {
+            "x": 13539,
+            "y": 6391
+          }
+        ]
+      },
+      {
+        "label": "MANTICORE Spawn",
+        "color": "#82c596",
+        "fillOpacity": 0.12,
+        "dashed": true,
+        "points": [
+          {
+            "x": 6922,
+            "y": 9085
+          },
+          {
+            "x": 7309,
+            "y": 8798
+          },
+          {
+            "x": 7022,
+            "y": 8412
+          },
+          {
+            "x": 6636,
+            "y": 8699
+          }
+        ]
+      },
+      {
+        "label": "LONESTAR Spawn",
+        "color": "#5fa8d3",
+        "fillOpacity": 0.12,
+        "dashed": true,
+        "points": [
+          {
+            "x": 8152,
+            "y": 3403
+          },
+          {
+            "x": 8633,
+            "y": 3403
+          },
+          {
+            "x": 8633,
+            "y": 2921
+          },
+          {
+            "x": 8153,
+            "y": 2922
+          }
+        ]
+      }
+    ]
+  }
+]

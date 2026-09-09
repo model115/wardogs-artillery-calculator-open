@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WardogsArtillery.Core/WardogsArtillery.Core.csproj" />
+    <Project Path="src/WardogsArtillery.Server/WardogsArtillery.Server.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WardogsArtillery.Core.Tests/WardogsArtillery.Core.Tests.csproj" />
+    <Project Path="tests/WardogsArtillery.Server.Tests/WardogsArtillery.Server.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/WardogsArtillery.Tools/WardogsArtillery.Tools.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>WardogsArtillery.Tools</RootNamespace>
+    <AssemblyName>WardogsArtillery.Tools</AssemblyName>
+    <Version>1.0.0</Version>
+    <Authors>model115</Authors>
+    <Description>构建期资产管线：把游戏原始数据压成分发用的 data/</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenCvSharp4" Version="4.13.0.20260627" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.13.0.20260627" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WardogsArtillery.Core\WardogsArtillery.Core.csproj" />
+  </ItemGroup>
+
+</Project>

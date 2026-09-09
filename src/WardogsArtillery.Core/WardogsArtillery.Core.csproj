@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>WardogsArtillery.Core</RootNamespace>
+    <AssemblyName>WardogsArtillery.Core</AssemblyName>
+    <Description>WARDOGS 火炮解算核心：射表插值、地形高程、弹道解算、可达射程、地形倾斜、弹着反推</Description>
+    <Version>1.0.0</Version>
+    <Authors>model115</Authors>
+  </PropertyGroup>
+
+</Project>

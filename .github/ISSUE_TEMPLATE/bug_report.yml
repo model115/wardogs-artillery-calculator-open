@@ -1,0 +1,62 @@
+name: Bug 报告 / Bug report
+description: 解算数值不对、界面异常、启动失败等
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提之前先看一眼 [README](https://github.com/model115/wardogs-artillery-calculator
+        和 [已知限制](https://github.com/model115/wardogs-artillery-calculator
+        安全问题请走 [SECURITY.md](https://github.com/model115/wardogs-artillery-calculator/blob/main/SECURITY.md)，不要开公开 issue。
+
+  - type: input
+    id: version
+    attributes:
+      label: 版本
+      description: 发行包版本（如 v1.0.0）或提交号
+      placeholder: v1.0.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: how
+    attributes:
+      label: 怎么运行的
+      options:
+        - 发行包 exe / 启动.cmd
+        - dotnet run（源码）
+        - 其它
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 现象
+      description: 你做了什么、期望什么、实际什么
+      placeholder: |
+        1. 放车体 (81.6, 81.6)、放目标 (94, 88)
+        2. 期望刻度 ~250 mil，实际显示 5 mil
+    validations:
+      required: true
+
+  - type: textarea
+    id: numbers
+    attributes:
+      label: 涉及到的数值
+      description: 地图、武器、车体/目标坐标、高差、显示出来的诸元 —— 越具体越好
+      placeholder: |
+        地图 bakurani / 武器 spg / 车体 81.6,81.6 / 目标 94,88
+        ΔZ +294 m / 方位 62.7° / 刻度 274.66 mil
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 左下角实时日志 / 控制台输出
+      render: text
+
+  - type: input
+    id: env
+    attributes:
+      label: 系统与浏览器
+      placeholder: Windows 11 24H2 / Edge 138

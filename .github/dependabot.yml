@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+
+      test-deps:
+        patterns:
+          - "xunit*"
+          - "Microsoft.NET.Test.Sdk"
+          - "Microsoft.AspNetCore.Mvc.Testing"
+      opencv:
+        patterns:
+          - "OpenCvSharp4*"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
