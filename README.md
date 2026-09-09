@@ -80,6 +80,22 @@ dotnet publish src/WardogsArtillery.Server -c Release -o dist
 
 ---
 
+## 网页端部署（纯静态）/ Deploy the web front-end
+
+> **一句话：整站是纯静态文件，没有后端进程、没有数据库、没有构建步骤。**
+> 唯一要做的事：把 `web/` 目录内容当站点根伺服，并把 `data/` 挂在站点根的 `/data` 路径下。
+
+- 站点根 = `web/` 的内容（`index.html` 用相对路径引用 `app.css` / `app.js` / `store.js` / `core/*.js`）；
+- 数据 = `data/`（代码里写死相对路径 `data/...`，换路径需同步改 `store.js` / `app.js`）；
+- 本公开仓库**不含游戏素材**（`data/images`、`data/terrain`、`data/markers`、`data/reach`），
+  站点缺素材时会**优雅降级**（地图/高程层缺失，其余功能可用）；
+- `.hgt` / `.wrg` 必须以 `application/octet-stream` 下发；缓存头规则见 [docs/DEPLOY.md](docs/DEPLOY.md)。
+
+**部署任务书（给 AI 建站助手）**：[docs/AI-DEPLOY.md](docs/AI-DEPLOY.md)
+**完整部署指南（nginx / 阿里云 OSS / CDN / 备案合规）**：[docs/DEPLOY.md](docs/DEPLOY.md)
+
+---
+
 ## 使用流程 / How to use
 
 1. **放车体** — 右上角点「放车体」，再点地图上你所在的位置（也可以手输坐标）。
@@ -95,28 +111,16 @@ dotnet publish src/WardogsArtillery.Server -c Release -o dist
 
 ## 界面截图 / Screenshots
 
-主界面（真实浏览器截图：左侧地图 + 右侧诸元面板）：
+> ⚠️ **本公开仓库不含游戏素材与截图**（版权原因，见下文「数据来源与许可」），
+> 因此下面的图片链接在本仓库中不可用，这是**有意的**，不是链接写错。
+> 想看真实界面：按「快速开始」本地跑起来即可，或用
+> `node tools/browsercheck.mjs --shot out.png` 自动生成截图。
 
-![UI](docs/static-site.png)
-
-> 这张图由 `node tools/browsercheck.mjs --shot docs/static-site.png` 自动生成 ——
-> 它会真的开一个无头浏览器，设好车体/目标、跑完解算与落点反推，再截图。
-
-地图（构建期拼成的一整张大图）：
-
-![map](data/images/bakurani_map.webp)
-
-高度热力图（越高越红）：
-
-![heatmap](data/images/bakurani_terrain.webp)
-
-1~5 塔被射范围（预计算层）：
-
-![towers](data/reach/bakurani_towers_preview.png)
-
-射程范围网格文件预览（地图中心 300 m，10 m 格）：
-
-![reach-grid](data/reach/bakurani_r300_s10_preview.png)
+- `docs/static-site.png` — 主界面（左侧地图 + 右侧诸元面板，真实浏览器截图）
+- `data/images/<地图>_map.webp` — 地图（构建期拼成的一整张大图）
+- `data/images/<地图>_terrain.webp` — 高度热力图（越高越红）
+- `data/reach/<地图>_towers_preview.png` — 1~5 塔被射范围（预计算层）
+- `data/reach/<地图>_r300_s10_preview.png` — 射程范围网格文件预览（中心 300 m，10 m 格）
 
 ---
 
